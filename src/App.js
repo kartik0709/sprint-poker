@@ -30,7 +30,7 @@ function App() {
   const getSessionData = React.useCallback(async () => {
     if (!session || !session._id) return;
 
-    const { session: sessionData, success, error } = await getSession(
+    const { session: sessionData, success } = await getSession(
       session._id
     );
 
@@ -42,7 +42,7 @@ function App() {
   const getTicketData = React.useCallback(async () => {
     if (!activeTicket || !activeTicket._id) return;
 
-    const { tickets, success, error } = await getTicket(activeTicket.session);
+    const { tickets, success } = await getTicket(activeTicket.session);
 
     if (!success || !tickets.length) return;
 
@@ -59,7 +59,6 @@ function App() {
       participant,
       success,
       ticket,
-      error,
     } = await createSession();
 
     if (!success) return;
@@ -87,7 +86,7 @@ function App() {
   const handleCreateTicket = React.useCallback(async () => {
     if (!session || !session._id) return;
 
-    const { ticket, success, error } = await createTicket(session._id);
+    const { ticket, success } = await createTicket(session._id);
 
     if (!success) return;
 
