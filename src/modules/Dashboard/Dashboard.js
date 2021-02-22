@@ -36,6 +36,7 @@ function Dashboard({
     }
 
     allPoints();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleNameChange = React.useCallback((e) => {
