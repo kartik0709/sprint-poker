@@ -1,0 +1,27 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  color: var(--main-text-color);
+}
+
+.footer-wrapper {
+  display: flex;
+  justify-content: center;
+  transform: translateX(-9%);
+  cursor: pointer;
+}
+
+.footer-img {
+  max-width: 120px;
+}
+
+.footer-text {
+  display: flex;
+  align-items: center;
+}
+
+.footer-logo {
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-left: 6px;
+}

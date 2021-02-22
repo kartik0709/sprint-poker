@@ -1,0 +1,20 @@
+.emptySessionState {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.emptySessionState .input {
+  text-align: center !important;
+}
+
+.emptySessionState-intro {
+  font-size: 16px;
+  margin-bottom: 22px;
+}
+
+.emptySessionState-seperation {
+  margin: 12px 0;
+}

@@ -1,0 +1,10 @@
+.toolkit {
+  display: flex;
+  justify-content: center;
+  padding: 16px 8px;
+}
+
+.toolkit > div {
+  padding: 0;
+  padding: 0 12px;
+}
