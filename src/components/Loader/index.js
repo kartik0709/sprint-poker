@@ -46,6 +46,7 @@ class Loader extends React.Component {
     var animation = [
       animationName,
       "2s",
+      // eslint-disable-next-line eqeqeq
       i == 1 ? "1s" : "0s",
       "infinite",
       "ease-in-out",
