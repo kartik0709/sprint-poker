@@ -2,6 +2,7 @@ import React from "react";
 
 import Dashboard from "./modules/Dashboard";
 import Footer from "./modules/Footer";
+import Loader from "./components/Loader";
 import EmptySessionState from "./modules/EmptySessionState";
 import useCreateSession from "./hooks/useCreateSession";
 import useJoinSession from "./hooks/useJoinSession";
@@ -18,6 +19,7 @@ function App() {
   const [participant, setParticipant] = React.useState();
   const [latestTicketId, setLatestTicketId] = React.useState("");
   const [activeTicket, setActiveTicket] = React.useState();
+  const [loading, setLoading] = React.useState(false);
 
   const { createSession } = useCreateSession();
   const { getSession } = useGetSession();
@@ -30,9 +32,7 @@ function App() {
   const getSessionData = React.useCallback(async () => {
     if (!session || !session._id) return;
 
-    const { session: sessionData, success } = await getSession(
-      session._id
-    );
+    const { session: sessionData, success } = await getSession(session._id);
 
     if (!success) return;
 
@@ -54,13 +54,11 @@ function App() {
   }, [activeTicket, getTicket]);
 
   const onCreateSession = React.useCallback(async () => {
-    const {
-      session,
-      participant,
-      success,
-      ticket,
-    } = await createSession();
+    setLoading(true);
 
+    const { session, participant, success, ticket } = await createSession();
+
+    setLoading(false);
     if (!success) return;
 
     setActiveTicket(ticket);
@@ -71,8 +69,11 @@ function App() {
 
   const onJoinSession = React.useCallback(
     async (id) => {
+      setLoading(true);
+
       const { session, participant, ticket, success } = await joinSession(id);
 
+      setLoading(false);
       if (!success) return;
 
       setActiveTicket(ticket);
@@ -86,8 +87,11 @@ function App() {
   const handleCreateTicket = React.useCallback(async () => {
     if (!session || !session._id) return;
 
+    setLoading(true);
+
     const { ticket, success } = await createTicket(session._id);
 
+    setLoading(false);
     if (!success) return;
 
     setActiveTicket(ticket);
@@ -95,7 +99,7 @@ function App() {
   }, [createTicket, session]);
 
   const handleUpdateTicket = React.useCallback(
-    (key) => (value) => {
+    (key) => async (value) => {
       switch (key) {
         case "scoreset":
           const scoreset = [
@@ -107,26 +111,25 @@ function App() {
               points: value,
             },
           ];
-          console.log("scoreset", scoreset);
 
-          updateTicket(activeTicket._id, { ...activeTicket, scoreset });
           setActiveTicket((ticket) => ({ ...ticket, scoreset }));
+          await updateTicket(activeTicket._id, { ...activeTicket, scoreset });
           break;
 
         case "description":
-          updateTicket(activeTicket._id, {
+          setActiveTicket((ticket) => ({ ...ticket, description: value }));
+          await updateTicket(activeTicket._id, {
             ...activeTicket,
             description: value,
           });
-          setActiveTicket((ticket) => ({ ...ticket, description: value }));
           break;
 
         case "isRevealed":
-          updateTicket(activeTicket._id, {
+          setActiveTicket((ticket) => ({ ...ticket, isRevealed: true }));
+          await updateTicket(activeTicket._id, {
             ...activeTicket,
             isRevealed: true,
           });
-          setActiveTicket((ticket) => ({ ...ticket, isRevealed: true }));
           break;
         default:
           break;
@@ -139,8 +142,8 @@ function App() {
     async (nickname) => {
       if (!participant) return;
 
-      updateNickname(participant._id, { ...participant, nickname });
       setParticipant((participant) => ({ ...participant, nickname }));
+      await updateNickname(participant._id, { ...participant, nickname });
     },
     [updateNickname, participant]
   );
@@ -162,6 +165,7 @@ function App() {
 
   return (
     <div id="insideRoot">
+      <Loader color="#19267a" loading={loading} size="120px" />
       <Footer />
       {!!session && !!participant && !!activeTicket ? (
         <Dashboard
