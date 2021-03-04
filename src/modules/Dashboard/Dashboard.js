@@ -1,6 +1,6 @@
 import React from "react";
 
-import Header from "../../components/Header";
+import Footer from "../Footer";
 import TicketCenter from "../TicketCenter";
 import Toolkit from "./components/Toolkit";
 
@@ -36,7 +36,7 @@ function Dashboard({
     }
 
     allPoints();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleNameChange = React.useCallback((e) => {
@@ -45,23 +45,17 @@ function Dashboard({
   }, []);
   return (
     <div className="dashboard">
-      <Toolkit onNewSession={createSession} onCreateTicket={createTicket} />
-      <div className="dashboard-section">
-        <Header
-          active={isNameEdited}
-          label="nickname"
-          placeholder="Enter your nickname"
-          buttonText="save"
-          inputText={isNameEdited ? editedName : participant.nickname}
-          infoHeading="Session id"
-          infoText={session.id}
-          onChange={handleNameChange}
-          onSave={() => {
-            setIsNameEdited(false);
-            handleUpdateNickname(editedName);
-          }}
-        />
-      </div>
+      <Toolkit
+        active={isNameEdited}
+        inputText={isNameEdited ? editedName : participant.nickname}
+        sessionId={session.id}
+        handleNameChange={handleNameChange}
+        onNameSave={() => {
+          setIsNameEdited(false);
+          handleUpdateNickname(editedName);
+        }}
+        onNewSession={createSession}
+      />
       <div className="dashboard-section">
         <TicketCenter
           participantId={participant._id}
@@ -71,6 +65,7 @@ function Dashboard({
           onReveal={updateTicket("isRevealed")}
           isLatestTicket={isLatestTicket}
           jumpToLatest={jumpToLatest}
+          onCreateTicket={createTicket}
         />
       </div>
       <div>
@@ -80,6 +75,7 @@ function Dashboard({
           points={points}
         />
       </div>
+      <Footer />
     </div>
   );
 }

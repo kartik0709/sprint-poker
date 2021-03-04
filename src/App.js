@@ -1,7 +1,6 @@
 import React from "react";
 
 import Dashboard from "./modules/Dashboard";
-import Footer from "./modules/Footer";
 import Loader from "./components/Loader";
 import EmptySessionState from "./modules/EmptySessionState";
 import useCreateSession from "./hooks/useCreateSession";
@@ -11,8 +10,6 @@ import useGetTicket from "./hooks/useGetTicket";
 import useCreateTicket from "./hooks/useCreateTicket";
 import useUpdateTicket from "./hooks/useUpdateTicket";
 import useUpdateNickname from "./hooks/useUpdateNickname";
-
-import "./App.css";
 
 function App() {
   const [session, setSession] = React.useState();
@@ -166,7 +163,6 @@ function App() {
   return (
     <div id="insideRoot">
       <Loader color="#19267a" loading={loading} size="120px" />
-      <Footer />
       {!!session && !!participant && !!activeTicket ? (
         <Dashboard
           session={session}
@@ -176,7 +172,7 @@ function App() {
           updateTicket={handleUpdateTicket}
           handleUpdateNickname={handleUpdateNickname}
           createSession={handleReset}
-          isLatestTicket={latestTicketId === activeTicket._id}
+          isLatestTicket={`${latestTicketId}` === `${activeTicket._id}`}
           jumpToLatest={() =>
             setActiveTicket((ticket) => ({ ...ticket, _id: latestTicketId }))
           }

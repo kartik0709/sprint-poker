@@ -78,6 +78,7 @@
   --main-second-text-color: #b5acac;
   --alternate-background-color: #fff;
   --success-color: #45a020;
+  --canonic-color: #4e61da;
 }
 
 body {
@@ -105,7 +106,6 @@ body {
 
 #insideRoot {
   display: flex;
-  flex-direction: column-reverse;
   position: relative;
   height: 100vh;
   width: 100vw;

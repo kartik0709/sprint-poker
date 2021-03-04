@@ -1,7 +1,9 @@
 import React from "react";
 
-import Header from "../../components/Header";
+import InputWithButton from "../../components/InputWithButton";
 import PointSystem from "../../components/PointSystem";
+
+import "./TicketCenter.css";
 
 function TicketCenter({
   participantId,
@@ -11,6 +13,7 @@ function TicketCenter({
   onReveal,
   isLatestTicket,
   jumpToLatest,
+  onCreateTicket,
 }) {
   const [hasEdited, setHasEdited] = React.useState(false);
   const [editedDescription, setEditedDescription] = React.useState("");
@@ -28,29 +31,37 @@ function TicketCenter({
     setHasEdited(false);
   }, [editedDescription, updateTicket]);
   return (
-    <div>
-      <Header
-        active={editedDescription && editedDescription !== ticket.description}
-        buttonText="Save"
-        label="Ticket Description"
-        placeholder="Enter ticket description"
-        infoHeading="Ticket Number"
-        infoText={ticket.number}
-        inputText={hasEdited ? editedDescription : ticket.description}
-        onChange={handleDescriptionChange}
-        onSave={handleOnSave}
-        extraCtaText={isLatestTicket ? "" : "jump to latest ticket"}
-        extraCtaClick={jumpToLatest}
-      />
-      <PointSystem
-        selectedPoint={ticket.scoreset.find(
-          (score) => score.participant === participantId
+    <div className="ticketCenter">
+      <div className="ticketCenter-cta">
+        <div className="button" onClick={onCreateTicket}>
+          create a new ticket
+        </div>
+        {!isLatestTicket && (
+          <div className="ticketCenter-cta-latest" onClick={jumpToLatest}>
+            jump to the latest ticket being discussed
+          </div>
         )}
-        points={points}
-        onPointSelect={updateTicket("scoreset")}
-        isRevealed={ticket.isRevealed}
-        onRevealClick={onReveal}
-      />
+      </div>
+      <div className="ticketCenter-tickets">
+        <InputWithButton
+          active={editedDescription && editedDescription !== ticket.description}
+          label="Ticket Description"
+          placeholder="Enter ticket description"
+          inputText={hasEdited ? editedDescription : ticket.description}
+          buttonText="Save"
+          onHandleChange={handleDescriptionChange}
+          onClick={handleOnSave}
+        />
+        <PointSystem
+          selectedPoint={ticket.scoreset.find(
+            (score) => score.participant === participantId
+          )}
+          points={points}
+          onPointSelect={updateTicket("scoreset")}
+          isRevealed={ticket.isRevealed}
+          onRevealClick={onReveal}
+        />
+      </div>
     </div>
   );
 }

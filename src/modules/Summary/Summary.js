@@ -14,7 +14,6 @@ function Summary({ participants, ticket, points }) {
 
   return (
     <div className="summary">
-      <div className="summary-separator"></div>
       <div className="summary-heading">summary</div>
       <div className="summary-brief">
         <div className="summary-brief-column summary-brief-major">
@@ -47,26 +46,27 @@ function Summary({ participants, ticket, points }) {
             );
           })}
         </div>
-        <div className="summary-brief-column summary-brief-minor">
-          <div className="summary-points">
-            <div className="summary-points-heading">votes distribution</div>
-            <div className="summary-brief-row">
-              <div className="first heading">Points</div>
-              <div className="second heading">Votes</div>
-            </div>
-            {votesDistribution.map((distribution) => (
-              <div
-                key={`distri-${distribution.point}`}
-                className="summary-brief-row"
-              >
-                <div className="first">{distribution.point}</div>
-                <div className="second">{distribution.votes}</div>
+        {ticket.isRevealed && (
+          <div className="summary-brief-column summary-brief-minor">
+            <div className="summary-points">
+              <div className="summary-points-heading">votes distribution</div>
+              <div className="summary-brief-row">
+                <div className="first heading">Points</div>
+                <div className="second heading">Votes</div>
               </div>
-            ))}
+              {votesDistribution.map((distribution) => (
+                <div
+                  key={`distri-${distribution.point}`}
+                  className="summary-brief-row"
+                >
+                  <div className="first">{distribution.point}</div>
+                  <div className="second">{distribution.votes}</div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
-      <div className="summary-separator"></div>
     </div>
   );
 }

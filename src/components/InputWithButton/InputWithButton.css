@@ -12,11 +12,12 @@
   right: 0;
   top: 50%;
   transform: translateY(-50%);
+  border: none !important;
   text-decoration: none !important;
 }
 
 .inputWithButton .inactive {
-  opacity: 60%;
+  color: var(--main-second-text-color) !important;
 }
 
 .inputWithButton .withLabel {

@@ -2,7 +2,7 @@ const BASE_URL = "https://canonic-sprint-poker.staging.canonic.dev/api/";
 
 export const AXIOS_CONFIG = {
   headers: {
-    Authorization: process.env.REACT_APP_TOKEN,
+    Authorization: '6034429aa795d6000894cfe6-4f9c379d-d4e7-4cf7-aa4b-e6ae4dffd9ca',
   },
 };
 

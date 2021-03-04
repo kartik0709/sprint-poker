@@ -1,15 +1,15 @@
 .point {
   display: flex;
+  flex-direction: column;
   align-items: center;
   margin-top: 18px;
 }
 
 .point-heading {
-  margin-right: 8px;
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 600;
-  margin-right: 18px;
+  margin: 0 0 9px 0;
 }
 
 .point-wrapper {
@@ -49,6 +49,10 @@
   color: var(--success-color);
   cursor: pointer;
   transition: all 0.15s ease-in-out;
+}
+
+.point-container {
+  display: flex;
 }
 
 .point .revealed {
